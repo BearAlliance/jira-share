@@ -45,16 +45,23 @@
 
     if (!issueKey) return null;
 
-    // Parse title from tab title
+    // Parse title from tab title — handles "PROJ-123 - Title - Jira" and "[PROJ-123] Title - Jira"
     const tabTitle = tab.title || "";
     const titleMatch = tabTitle.match(/^\[?[A-Z][A-Z0-9_]+-\d+\]?\s*[-–]?\s*(.+?)(?:\s*[-–]\s*Jira)?$/i);
     const rawTitle = titleMatch ? titleMatch[1].trim() : tabTitle;
     const title = rawTitle.replace(/^\[?[A-Z][A-Z0-9_]+-\d+\]?\s*[-–:]?\s*/i, "").trim();
 
     // Canonical URL: Cloud uses origin; Server uses stored base
-    const canonicalBase = url.hostname.endsWith(".atlassian.net")
-      ? url.origin
-      : new URL(storedUrl).href.replace(/\/$/, "");
+    let canonicalBase;
+    if (url.hostname.endsWith(".atlassian.net")) {
+      canonicalBase = url.origin;
+    } else {
+      try {
+        canonicalBase = new URL(storedUrl).href.replace(/\/$/, "");
+      } catch {
+        canonicalBase = url.origin;
+      }
+    }
 
     return { issueKey, title, url: `${canonicalBase}/browse/${issueKey}` };
   }
@@ -72,6 +79,8 @@
     navigator.clipboard.writeText(text).then(() => {
       showMessage("Copied!");
       setTimeout(() => window.close(), 600);
+    }).catch(() => {
+      showMessage("Could not copy to clipboard.");
     });
   }
 
