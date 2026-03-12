@@ -3,7 +3,11 @@
   "name": "Quickshare",
   "version": "1.0.0",
   "description": "Copy and share Jira issue links in Slack or Markdown format.",
-  "permissions": ["clipboardWrite", "activeTab"],
+  "permissions": ["clipboardWrite", "activeTab", "storage"],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
