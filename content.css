@@ -1,11 +1,11 @@
-.jira-share-container {
+.quickshare-container {
   position: relative;
   display: inline-flex;
   align-items: center;
   margin-left: 8px;
 }
 
-.jira-share-btn {
+.quickshare-btn {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -22,15 +22,15 @@
   white-space: nowrap;
 }
 
-.jira-share-btn:hover {
+.quickshare-btn:hover {
   background: #0065FF;
 }
 
-.jira-share-btn:active {
+.quickshare-btn:active {
   background: #0747A6;
 }
 
-.jira-share-dropdown {
+.quickshare-dropdown {
   display: none;
   position: absolute;
   top: calc(100% + 4px);
@@ -44,14 +44,14 @@
   padding: 4px 0;
 }
 
-.jira-share-dropdown-header {
+.quickshare-dropdown-header {
   padding: 10px 16px 8px;
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.jira-share-dropdown-key {
+.quickshare-dropdown-key {
   font-size: 11px;
   font-weight: 600;
   color: #0052CC;
@@ -59,7 +59,7 @@
   letter-spacing: 0.02em;
 }
 
-.jira-share-dropdown-title {
+.quickshare-dropdown-title {
   font-size: 13px;
   font-weight: 500;
   color: #172B4D;
@@ -72,17 +72,17 @@
   -webkit-box-orient: vertical;
 }
 
-.jira-share-dropdown-divider {
+.quickshare-dropdown-divider {
   height: 1px;
   background: #EBECF0;
   margin: 4px 0;
 }
 
-.jira-share-dropdown.jira-share-open {
+.quickshare-dropdown.quickshare-open {
   display: block;
 }
 
-.jira-share-dropdown-item {
+.quickshare-dropdown-item {
   display: block;
   width: 100%;
   padding: 8px 16px;
@@ -96,6 +96,6 @@
   white-space: nowrap;
 }
 
-.jira-share-dropdown-item:hover {
+.quickshare-dropdown-item:hover {
   background: #F4F5F7;
 }

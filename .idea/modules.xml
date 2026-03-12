@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/jira-share.iml" filepath="$PROJECT_DIR$/.idea/jira-share.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/quickshare.iml" filepath="$PROJECT_DIR$/.idea/quickshare.iml" />
     </modules>
   </component>
 </project>

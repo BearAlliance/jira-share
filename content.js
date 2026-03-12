@@ -78,7 +78,7 @@
       text = `[${data.issueKey}: ${data.title}](${data.url})`;
     }
 
-    const btn = document.querySelector(".jira-share-btn");
+    const btn = document.querySelector(".quickshare-btn");
     copyToClipboard(text).then(() => {
       if (btn) {
         const original = btn.textContent;
@@ -88,54 +88,54 @@
     });
 
     // Close dropdown
-    const dropdown = document.querySelector(".jira-share-dropdown");
-    if (dropdown) dropdown.classList.remove("jira-share-open");
+    const dropdown = document.querySelector(".quickshare-dropdown");
+    if (dropdown) dropdown.classList.remove("quickshare-open");
   }
 
   // --- UI ---
 
   function createShareButton() {
     const container = document.createElement("div");
-    container.id = "jira-share-btn";
-    container.className = "jira-share-container";
+    container.id = "quickshare-btn";
+    container.className = "quickshare-container";
 
     const btn = document.createElement("button");
-    btn.className = "jira-share-btn";
+    btn.className = "quickshare-btn";
     btn.textContent = "Share";
     btn.type = "button";
 
     const dropdown = document.createElement("div");
-    dropdown.className = "jira-share-dropdown";
+    dropdown.className = "quickshare-dropdown";
 
     // Issue preview header
     const header = document.createElement("div");
-    header.className = "jira-share-dropdown-header";
+    header.className = "quickshare-dropdown-header";
     const headerKey = document.createElement("span");
-    headerKey.className = "jira-share-dropdown-key";
+    headerKey.className = "quickshare-dropdown-key";
     const headerTitle = document.createElement("span");
-    headerTitle.className = "jira-share-dropdown-title";
+    headerTitle.className = "quickshare-dropdown-title";
     header.appendChild(headerKey);
     header.appendChild(headerTitle);
     dropdown.appendChild(header);
 
     const divider = document.createElement("div");
-    divider.className = "jira-share-dropdown-divider";
+    divider.className = "quickshare-dropdown-divider";
     dropdown.appendChild(divider);
 
     const slackBtn = document.createElement("button");
-    slackBtn.className = "jira-share-dropdown-item";
+    slackBtn.className = "quickshare-dropdown-item";
     slackBtn.textContent = "Copy as Slack";
     slackBtn.type = "button";
     slackBtn.addEventListener("click", () => copyIssueLink("slack"));
 
     const mdBtn = document.createElement("button");
-    mdBtn.className = "jira-share-dropdown-item";
+    mdBtn.className = "quickshare-dropdown-item";
     mdBtn.textContent = "Copy as Markdown";
     mdBtn.type = "button";
     mdBtn.addEventListener("click", () => copyIssueLink("markdown"));
 
     const confluenceBtn = document.createElement("button");
-    confluenceBtn.className = "jira-share-dropdown-item";
+    confluenceBtn.className = "quickshare-dropdown-item";
     confluenceBtn.textContent = "Copy as Confluence";
     confluenceBtn.type = "button";
     confluenceBtn.addEventListener("click", () => copyIssueLink("confluence"));
@@ -152,7 +152,7 @@
         headerKey.textContent = data.issueKey;
         headerTitle.textContent = data.title;
       }
-      dropdown.classList.toggle("jira-share-open");
+      dropdown.classList.toggle("quickshare-open");
     });
 
     container.appendChild(btn);
@@ -161,7 +161,7 @@
     // Close dropdown on outside click
     document.addEventListener("click", (e) => {
       if (!container.contains(e.target)) {
-        dropdown.classList.remove("jira-share-open");
+        dropdown.classList.remove("quickshare-open");
       }
     });
 
@@ -171,7 +171,7 @@
   // --- Injection ---
 
   function tryInjectButton() {
-    if (document.getElementById("jira-share-btn")) return;
+    if (document.getElementById("quickshare-btn")) return;
     if (!getIssueData()) return;
 
     const toolbar =
@@ -193,7 +193,7 @@
     // Detect SPA navigation
     if (window.location.href !== lastUrl) {
       lastUrl = window.location.href;
-      const existing = document.getElementById("jira-share-btn");
+      const existing = document.getElementById("quickshare-btn");
       if (existing) existing.remove();
     }
 
