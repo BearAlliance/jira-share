@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Jira Share",
+  "name": "Quickshare",
   "version": "1.0.0",
   "description": "Copy and share Jira issue links in Slack or Markdown format.",
   "permissions": ["clipboardWrite", "activeTab"],

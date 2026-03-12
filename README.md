@@ -1,4 +1,4 @@
-# Jira Share
+# Quickshare
 
 Browser extension that copies Jira issue links in multiple formats from any Jira Cloud issue page.
 
@@ -36,7 +36,7 @@ Browser extension that copies Jira issue links in multiple formats from any Jira
 3. The dropdown shows the issue key and title, then choose a format to copy
 
 **From the browser toolbar:**
-1. Click the Jira Share extension icon in your browser toolbar
+1. Click the Quickshare extension icon in your browser toolbar
 2. The popup shows the issue key and title for the current tab
 3. Choose a format to copy — the popup closes automatically after copying
 

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Jira Share is a cross-browser (Chrome + Firefox) Manifest V3 extension that injects a "Share" button into Jira Cloud issue pages. The button shows a dropdown with Slack and Markdown options, each copying a formatted issue link to the clipboard.
+Quickshare is a cross-browser (Chrome + Firefox) Manifest V3 extension that injects a "Share" button into Jira Cloud issue pages. The button shows a dropdown with Slack and Markdown options, each copying a formatted issue link to the clipboard.
 
 ## Architecture
 
@@ -12,7 +12,7 @@ No build tooling, no background script — the entire extension is a content scr
 
 - `manifest.json` — Manifest V3 config; matches `*.atlassian.net`
 - `content.js` — Content script: extracts issue data, builds UI, copies formatted links
-- `content.css` — Styles for the share button/dropdown (all selectors prefixed `.jira-share-`)
+- `content.css` — Styles for the share button/dropdown (all selectors prefixed `.quickshare-`)
 - `icons/` — Placeholder extension icons (16/48/128px)
 
 ## Development
