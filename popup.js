@@ -33,10 +33,9 @@
     if (!issueKey) return null;
 
     // Parse title from tab title (typically "PROJ-123 - Title - Jira" or "[PROJ-123] Title - Jira")
-    let title = "";
     const tabTitle = tab.title || "";
     const titleMatch = tabTitle.match(/^\[?[A-Z][A-Z0-9_]+-\d+\]?\s*[-–]\s*(.+?)(?:\s*[-–]\s*Jira)?$/i);
-    title = titleMatch ? titleMatch[1].trim() : tabTitle;
+    const title = titleMatch ? titleMatch[1].trim() : tabTitle;
 
     const canonicalUrl = `${url.origin}/browse/${issueKey}`;
     return { issueKey, title, url: canonicalUrl };
