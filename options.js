@@ -24,7 +24,10 @@
 
     // Empty input → delete the stored key
     if (!raw) {
-      chrome.storage.sync.remove("jiraServerUrl", () => showStatus("Saved."));
+      chrome.storage.sync.remove("jiraServerUrl", () => {
+        if (chrome.runtime.lastError) { showStatus("Save failed.", true); return; }
+        showStatus("Saved.");
+      });
       return;
     }
 
@@ -44,6 +47,9 @@
 
     // Strip trailing slash before storing
     const normalised = parsed.href.replace(/\/$/, "");
-    chrome.storage.sync.set({ jiraServerUrl: normalised }, () => showStatus("Saved."));
+    chrome.storage.sync.set({ jiraServerUrl: normalised }, () => {
+      if (chrome.runtime.lastError) { showStatus("Save failed.", true); return; }
+      showStatus("Saved.");
+    });
   });
 })();
