@@ -71,7 +71,7 @@
 
     let text;
     if (format === "slack") {
-      text = `<${data.url}|${data.issueKey}: ${data.title}>`;
+      text = `${data.issueKey}: ${data.url}`;
     } else if (format === "confluence") {
       text = `[${data.issueKey}: ${data.title}|${data.url}]`;
     } else {
