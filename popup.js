@@ -34,8 +34,9 @@
 
     // Parse title from tab title (typically "PROJ-123 - Title - Jira" or "[PROJ-123] Title - Jira")
     const tabTitle = tab.title || "";
-    const titleMatch = tabTitle.match(/^\[?[A-Z][A-Z0-9_]+-\d+\]?\s*[-–]\s*(.+?)(?:\s*[-–]\s*Jira)?$/i);
-    const title = titleMatch ? titleMatch[1].trim() : tabTitle;
+    const titleMatch = tabTitle.match(/^\[?[A-Z][A-Z0-9_]+-\d+\]?\s*[-–]?\s*(.+?)(?:\s*[-–]\s*Jira)?$/i);
+    const rawTitle = titleMatch ? titleMatch[1].trim() : tabTitle;
+    const title = rawTitle.replace(/^\[?[A-Z][A-Z0-9_]+-\d+\]?\s*[-–:]?\s*/i, "").trim();
 
     const canonicalUrl = `${url.origin}/browse/${issueKey}`;
     return { issueKey, title, url: canonicalUrl };
@@ -45,6 +46,8 @@
     let text;
     if (format === "slack") {
       text = `<${data.url}|${data.issueKey}: ${data.title}>`;
+    } else if (format === "confluence") {
+      text = `[${data.issueKey}: ${data.title}|${data.url}]`;
     } else {
       text = `[${data.issueKey}: ${data.title}](${data.url})`;
     }
@@ -67,5 +70,6 @@
     document.getElementById("issue-title").textContent = data.title;
     document.getElementById("slack-btn").addEventListener("click", () => copyAndClose("slack", data));
     document.getElementById("markdown-btn").addEventListener("click", () => copyAndClose("markdown", data));
+    document.getElementById("confluence-btn").addEventListener("click", () => copyAndClose("confluence", data));
   });
 })();

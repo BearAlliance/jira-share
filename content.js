@@ -25,11 +25,14 @@
     );
     let title = summaryEl ? summaryEl.textContent.trim() : "";
     if (!title) {
-      // Fallback: parse document title (typically "PROJ-123 - Title - Jira" or similar)
+      // Fallback: parse document title — handles formats like:
+      //   "KAN-1 - Title - Jira", "[KAN-1] Title - Jira", "[KAN-1] Title"
       const docTitle = document.title;
-      const titleMatch = docTitle.match(/^\[?[A-Z][A-Z0-9_]+-\d+\]?\s*[-–]\s*(.+?)(?:\s*[-–]\s*Jira)?$/i);
+      const titleMatch = docTitle.match(/^\[?[A-Z][A-Z0-9_]+-\d+\]?\s*[-–]?\s*(.+?)(?:\s*[-–]\s*Jira)?$/i);
       title = titleMatch ? titleMatch[1].trim() : docTitle;
     }
+    // Strip any leading "[KEY]" or "KEY: " or "KEY - " the title may still contain
+    title = title.replace(/^\[?[A-Z][A-Z0-9_]+-\d+\]?\s*[-–:]?\s*/i, "").trim();
 
     const url = `${window.location.origin}/browse/${issueKey}`;
     return { issueKey, title, url };
@@ -69,6 +72,8 @@
     let text;
     if (format === "slack") {
       text = `<${data.url}|${data.issueKey}: ${data.title}>`;
+    } else if (format === "confluence") {
+      text = `[${data.issueKey}: ${data.title}|${data.url}]`;
     } else {
       text = `[${data.issueKey}: ${data.title}](${data.url})`;
     }
@@ -129,8 +134,15 @@
     mdBtn.type = "button";
     mdBtn.addEventListener("click", () => copyIssueLink("markdown"));
 
+    const confluenceBtn = document.createElement("button");
+    confluenceBtn.className = "jira-share-dropdown-item";
+    confluenceBtn.textContent = "Copy as Confluence";
+    confluenceBtn.type = "button";
+    confluenceBtn.addEventListener("click", () => copyIssueLink("confluence"));
+
     dropdown.appendChild(slackBtn);
     dropdown.appendChild(mdBtn);
+    dropdown.appendChild(confluenceBtn);
 
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
