@@ -3,7 +3,7 @@
   "name": "Quickshare",
   "version": "1.0.0",
   "description": "Copy and share Jira issue links in Slack or Markdown format.",
-  "permissions": ["clipboardWrite", "activeTab"],
+  "permissions": ["activeTab", "tabs"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -12,14 +12,6 @@
       "128": "icons/icon128.png"
     }
   },
-  "content_scripts": [
-    {
-      "matches": ["https://*.atlassian.net/*"],
-      "js": ["content.js"],
-      "css": ["content.css"],
-      "run_at": "document_idle"
-    }
-  ],
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",

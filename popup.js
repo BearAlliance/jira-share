@@ -10,66 +10,35 @@
     messageEl.textContent = text;
   }
 
-  function getIssueDataFromTab(tab) {
-    if (!tab || !tab.url) return null;
-
-    let url;
-    try { url = new URL(tab.url); } catch { return null; }
-
-    if (!url.hostname.endsWith(".atlassian.net")) return null;
-
-    // Try /browse/PROJ-123
-    const browseMatch = url.pathname.match(/\/browse\/([A-Z][A-Z0-9_]+-\d+)/);
-    let issueKey = browseMatch ? browseMatch[1] : null;
-
-    // Fallback: selectedIssue query param
-    if (!issueKey) {
-      const selected = url.searchParams.get("selectedIssue");
-      if (selected && /^[A-Z][A-Z0-9_]+-\d+$/.test(selected)) {
-        issueKey = selected;
-      }
-    }
-
-    if (!issueKey) return null;
-
-    // Parse title from tab title (typically "PROJ-123 - Title - Jira" or "[PROJ-123] Title - Jira")
-    const tabTitle = tab.title || "";
-    const titleMatch = tabTitle.match(/^\[?[A-Z][A-Z0-9_]+-\d+\]?\s*[-–]?\s*(.+?)(?:\s*[-–]\s*Jira)?$/i);
-    const rawTitle = titleMatch ? titleMatch[1].trim() : tabTitle;
-    const title = rawTitle.replace(/^\[?[A-Z][A-Z0-9_]+-\d+\]?\s*[-–:]?\s*/i, "").trim();
-
-    const canonicalUrl = `${url.origin}/browse/${issueKey}`;
-    return { issueKey, title, url: canonicalUrl };
-  }
-
-  function copyAndClose(format, data) {
-    let text;
-    if (format === "slack") {
-      text = `${data.issueKey}: ${data.url}`;
-    } else if (format === "confluence") {
-      text = `[${data.issueKey}: ${data.title}|${data.url}]`;
-    } else {
-      text = `[${data.issueKey}: ${data.title}](${data.url})`;
-    }
-
+  function copyAndClose(text) {
     navigator.clipboard.writeText(text).then(() => {
       showMessage("Copied!");
       setTimeout(() => window.close(), 600);
+    }).catch(() => {
+      showMessage("Could not copy to clipboard.");
     });
   }
 
-  // Get the active tab and set up buttons
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const data = getIssueDataFromTab(tabs[0]);
-    if (!data) {
-      showMessage("Not on a Jira issue page.");
+    const tab = tabs[0];
+    if (!tab || !tab.url || !tab.title) {
+      showMessage("No page info available.");
       return;
     }
 
-    document.getElementById("issue-key").textContent = data.issueKey;
-    document.getElementById("issue-title").textContent = data.title;
-    document.getElementById("slack-btn").addEventListener("click", () => copyAndClose("slack", data));
-    document.getElementById("markdown-btn").addEventListener("click", () => copyAndClose("markdown", data));
-    document.getElementById("confluence-btn").addEventListener("click", () => copyAndClose("confluence", data));
+    const url = tab.url;
+    const title = tab.title;
+
+    document.getElementById("issue-title").textContent = title;
+
+    document.getElementById("slack-btn").addEventListener("click", () =>
+      copyAndClose(`<${url}|${title}>`)
+    );
+    document.getElementById("markdown-btn").addEventListener("click", () =>
+      copyAndClose(`[${title}](${url})`)
+    );
+    document.getElementById("confluence-btn").addEventListener("click", () =>
+      copyAndClose(`[${title}|${url}]`)
+    );
   });
 })();

@@ -1,17 +1,15 @@
 # Quickshare
 
-Browser extension that copies Jira issue links in multiple formats from any Jira Cloud issue page.
+Browser extension that copies the current page's link in multiple formats — ready to paste into Slack, Markdown documents, or Confluence.
 
 ## Features
 
-- Adds a **Share** button to the issue action toolbar
-- Also accessible via the **browser toolbar icon**
+- Click the **toolbar icon** on any page to copy a formatted link
 - Three copy formats:
-  - **Slack** — `KAN-1: https://tenant.atlassian.net/browse/KAN-1`
-  - **Markdown** — `[KAN-1: Issue Title](https://tenant.atlassian.net/browse/KAN-1)`
-  - **Confluence** — `[KAN-1: Issue Title|https://tenant.atlassian.net/browse/KAN-1]`
-- Works on full issue views (`/browse/KAN-1`) and board modal views
-- Handles SPA navigation automatically — button re-injects when switching issues
+  - **Slack** — `<https://example.com|Page Title>`
+  - **Markdown** — `[Page Title](https://example.com)`
+  - **Confluence** — `[Page Title|https://example.com]`
+- Popup shows the full page title and closes automatically after copying
 
 ## Installation
 
@@ -30,23 +28,15 @@ Browser extension that copies Jira issue links in multiple formats from any Jira
 
 ## Usage
 
-**From the issue page:**
-1. Navigate to any Jira Cloud issue
-2. Click the **Share** button in the issue action toolbar (top of the issue, near Attach / Link issue)
-3. The dropdown shows the issue key and title, then choose a format to copy
-
-**From the browser toolbar:**
-1. Click the Quickshare extension icon in your browser toolbar
-2. The popup shows the issue key and title for the current tab
-3. Choose a format to copy — the popup closes automatically after copying
-
-If the current tab is not a Jira issue page, the popup will say so.
+1. Navigate to any webpage
+2. Click the Quickshare icon in your browser toolbar
+3. Choose a format — the link is copied to your clipboard and the popup closes
 
 ## Development
 
 ```sh
 npm install   # install dev dependencies (ESLint)
-npm run lint  # lint content.js and popup.js
+npm run lint  # lint popup.js
 ```
 
 After editing any file, reload the extension in your browser to pick up changes.
